@@ -1,0 +1,30 @@
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test continue-on-error
+        id: test-continue-on-error
+        continue-on-error: true
+        run: exit 1
+      - name: General failure check
+        if: ${{ failure() }}
+        run: echo "failure() is true"
+      - name: Specific failure check
+        if: ${{ failure() && steps.test-continue-on-error.conclusion == 'failure' }}
+        run: echo "steps.test-continue-on-error.conclusion is failure"
+      - name: Test failure
+        id: test-failure
+        run: exit 1
+      - name: General failure check
+        if: ${{ failure() }}
+        run: echo "failure() is true"
+      - name: Specific failure check
+        if: ${{ failure() && steps.test-failure.conclusion == 'failure' }}
+        run: echo "steps.test-failure.conclusion is failure"
