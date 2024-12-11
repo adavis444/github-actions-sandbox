@@ -16,8 +16,11 @@ jobs:
       - name: General failure check
         if: ${{ failure() }}
         run: echo "failure() is true"
-      - name: Specific failure check
-        if: ${{ failure() && steps.test-continue-on-error.conclusion == 'failure' }}
+      - name: test-continue-on-error outcome
+        if: ${{ steps.test-continue-on-error.outcome == 'failure' }}
+        run: echo "steps.test-continue-on-error.outcome is failure"
+      - name: test-continue-on-error conclusion
+        if: ${{ steps.test-continue-on-error.conclusion == 'failure' }}
         run: echo "steps.test-continue-on-error.conclusion is failure"
       - name: Test failure
         id: test-failure
@@ -25,6 +28,9 @@ jobs:
       - name: General failure check
         if: ${{ failure() }}
         run: echo "failure() is true"
-      - name: Specific failure check
-        if: ${{ failure() && steps.test-failure.conclusion == 'failure' }}
+      - name: test-failure outcome
+        if: ${{ steps.test-failure.outcome == 'failure' }}
+        run: echo "steps.test-failure.outcome is failure"
+      - name: test-failure conclusion
+        if: ${{ steps.test-failure.conclusion == 'failure' }}
         run: echo "steps.test-failure.conclusion is failure"
