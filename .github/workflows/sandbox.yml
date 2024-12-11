@@ -29,8 +29,8 @@ jobs:
         if: ${{ failure() }}
         run: echo "failure() is true"
       - name: test-failure outcome
-        if: ${{ steps.test-failure.outcome == 'failure' }}
+        if: ${{ failure() && steps.test-failure.outcome == 'failure' }}
         run: echo "steps.test-failure.outcome is failure"
       - name: test-failure conclusion
-        if: ${{ steps.test-failure.conclusion == 'failure' }}
+        if: ${{ failure() && steps.test-failure.conclusion == 'failure' }}
         run: echo "steps.test-failure.conclusion is failure"
